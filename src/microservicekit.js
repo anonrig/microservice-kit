@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 const fs = require('fs');
-const uuid = require('node-uuid');
+const uuid = require('uuid');
 const debug = require('debug')('microservice-kit:microservicekit');
 const Chance = require('chance');
 

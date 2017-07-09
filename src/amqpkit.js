@@ -3,7 +3,7 @@
 const async = require('async-q');
 const _ = require('lodash');
 const amqp = require('amqplib');
-const uuid = require('node-uuid');
+const uuid = require('uuid');
 const debug = require('debug')('microservice-kit:amqpkit');
 
 const Message = require('./lib/message');

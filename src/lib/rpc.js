@@ -1,7 +1,7 @@
 "use strict";
 
 const debug = require('debug')('microservice-kit:lib:rpc');
-const uuid = require('node-uuid');
+const uuid = require('uuid');
 const _ = require('lodash');
 const Response = require('./response');
 const Queue = require('./queue');

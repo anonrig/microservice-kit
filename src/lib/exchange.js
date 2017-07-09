@@ -3,7 +3,7 @@
 const debug = require('debug')('microservice-kit:lib:exchange');
 const async = require('async-q');
 const _ = require('lodash');
-const uuid = require('node-uuid');
+const uuid = require('uuid');
 const Message = require('./message');
 const Response = require('./response');
 
