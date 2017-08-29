@@ -3,7 +3,7 @@
 const debug = require('debug')('microservice-kit:lib:exchange');
 const async = require('async-q');
 const _ = require('lodash');
-const uuid = require('uuid');
+const uuid = require('uuid/v4');
 const Message = require('./message');
 const Response = require('./response');
 
@@ -66,8 +66,12 @@ class Exchange {
             return Promise.resolve(this.channel.publish(this.name, routingKey, content, options));
         }
 
-        options.correlationId = uuid.v4();
+        options.correlationId = uuid();
         options.replyTo = this.rpc_.getUniqueQueueName();
+
+        if (_.isNumber(options.timeout) && options.timeout > 0) {
+            options.expiration = options.timeout.toString();
+        }
 
         const rv = new Promise((resolve, reject) => {
             this.log_('info', 'Publishing event', {

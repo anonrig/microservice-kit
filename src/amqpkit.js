@@ -3,8 +3,9 @@
 const async = require('async-q');
 const _ = require('lodash');
 const amqp = require('amqplib');
-const uuid = require('uuid');
+const uuid = require('uuid/v4');
 const debug = require('debug')('microservice-kit:amqpkit');
+const url = require('url');
 
 const Message = require('./lib/message');
 const Response = require('./lib/response');
@@ -43,6 +44,12 @@ class AmqpKit {
         if (this.options_.queues && !Array.isArray(this.options_.queues))
             throw new Error('MicroserviceKit init failed. ' +
                 'options.queues must be an array.');
+
+        if (this.options_.url) {
+            this.options_.connectionOptions = _.assign(this.options_.connectionOptions, {
+                servername: url.parse(this.options_.url).hostname
+            });
+        }
 
         return amqp
             .connect(this.options_.url, this.options_.connectionOptions)
@@ -105,12 +112,17 @@ class AmqpKit {
 
         ShutdownKit.addJob((done) => {
             debug('Closing connection...');
-            this.connection
-                .close()
-                .then(() => {
-                    done();
-                })
-                .catch(done);
+            try {
+                this.connection
+                    .close()
+                    .then(() => {
+                        done();
+                    })
+                    .catch(done);
+            } catch (err) {
+                debug('Could not close connection', err);
+                done();
+            }
         });
     }
 
@@ -157,7 +169,7 @@ class AmqpKit {
             return Promise.reject(new Error('You cannot create queue with same key more than once.'));
 
         if (!name && opt_options && opt_options.exclusive)
-            name = this.options_.id + '-' + 'excl' + '-' + uuid.v4().split('-')[0];
+            name = this.options_.id + '-' + 'excl' + '-' + uuid().split('-')[0];
 
         const queue = new Queue({
             channel: this.channel,

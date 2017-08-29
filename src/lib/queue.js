@@ -2,7 +2,7 @@
 
 const debug = require('debug')('microservice-kit:lib:queue');
 const async = require('async-q');
-const uuid = require('uuid');
+const uuid = require('uuid/v4');
 const _ = require('lodash');
 const Message = require('./message');
 const Exchange = require('./exchange');
@@ -187,8 +187,12 @@ class Queue {
             return Promise.resolve(this.channel.sendToQueue(queue, content, options));
         }
 
-        options.correlationId = uuid.v4();
+        options.correlationId = uuid();
         options.replyTo = this.rpc_.getUniqueQueueName();
+
+        if (_.isNumber(options.timeout) && options.timeout > 0) {
+            options.expiration = options.timeout.toString();
+        }
 
         const rv = new Promise((resolve, reject) => {
             this.log_('info', 'Sending event to queue', {
