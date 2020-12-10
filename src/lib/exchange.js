@@ -56,7 +56,7 @@ class Exchange extends EventEmitterExtra {
 
         const message = new Message(eventName, opt_payload);
         const options = _.assign({}, this.publishDefaults, opt_options || {});
-        const content = new Buffer(JSON.stringify(message.toJSON() || {}));
+        const content = Buffer.from(JSON.stringify(message.toJSON() || {}));
 
         if (!this.rpc_ || options.dontExpectRpc) {
             this.log_('info', 'Publishing event', {

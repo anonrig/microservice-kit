@@ -76,7 +76,7 @@ class Queue extends EventEmitterExtra {
                         const response = new Response(err, data, true);
                         this.channel.sendToQueue(
                             msg.properties.replyTo,
-                            new Buffer(JSON.stringify(response.toJSON())),
+                            Buffer.from(JSON.stringify(response.toJSON())),
                             {correlationId: msg.properties.correlationId}
                         );
 
@@ -108,7 +108,7 @@ class Queue extends EventEmitterExtra {
                         const response = new Response(null, data, false);
                         this.channel.sendToQueue(
                             msg.properties.replyTo,
-                            new Buffer(JSON.stringify(response.toJSON())),
+                            Buffer.from(JSON.stringify(response.toJSON())),
                             {correlationId: msg.properties.correlationId}
                         );
                     }
@@ -191,7 +191,7 @@ class Queue extends EventEmitterExtra {
         const message = new Message(eventName, opt_payload);
         const queue = this.getUniqueName();
         const options = _.assign({}, Exchange.publishDefaults, opt_options || {});
-        const content = new Buffer(JSON.stringify(message.toJSON() || {}));
+        const content = Buffer.from(JSON.stringify(message.toJSON() || {}));
 
         if (!this.rpc_ || options.dontExpectRpc) {
             this.log_('info', 'Sending event to queue', {
