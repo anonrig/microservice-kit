@@ -4,7 +4,7 @@ const async = require('async-q');
 const _ = require('lodash');
 const amqp = require('amqplib');
 const EventEmitterExtra = require('event-emitter-extra');
-const uuid = require('uuid/v4');
+const { v4: uuid } = require('uuid');
 const debug = require('debug')('microservice-kit:amqpkit');
 const url = require('url');
 
