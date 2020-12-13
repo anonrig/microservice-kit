@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 const fs = require('fs');
-const EventEmitterExtra = require('event-emitter-extra');
+const EventEmitterExtra = require('event-emitted');
 const { v4: uuid } = require('uuid');
 const debug = require('debug')('microservice-kit:microservicekit');
 const Chance = require('chance');

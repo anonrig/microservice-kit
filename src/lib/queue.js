@@ -2,7 +2,7 @@
 
 const debug = require('debug')('microservice-kit:lib:queue');
 const async = require('async-q');
-const EventEmitterExtra = require('event-emitter-extra');
+const EventEmitterExtra = require('event-emitted');
 const { v4: uuid } = require('uuid');
 const _ = require('lodash');
 const Message = require('./message');
