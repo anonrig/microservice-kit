@@ -6,8 +6,16 @@
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha"
   },
-  "author": "OmmaSign Tech <tech@ommasign.com>",
-  "license": "ISC",
+  "author": "Yagiz Nizipli <yagiz@nizipli.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anonrig/microservice-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/anonrig/microservice-kit/issues"
+  },
+  "homepage": "https://github.com/anonrig/microservice-kit#readme",
   "dependencies": {
     "@google-cloud/trace-agent": "5.1.1",
     "amqplib": "0.6.0",
